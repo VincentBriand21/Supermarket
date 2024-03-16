@@ -7,6 +7,14 @@ import random
 from tkinter import*
 from tkinter import messagebox
 
+#TODO:
+# use tabulate
+# use OOP
+# Export and import using CSV format
+# Make each customer as an object of which there is a shopping cart as a dictionary format
+# Create a main program
+# Cleanup the main program
+
 # This section of code is my Initialization for the variables
 # I could make the initialization in one line for line efficiency but
 # It's easier to see if it's laid out line by line
@@ -47,7 +55,6 @@ def signup ():
 
 # This Section Of Code is a Function for the Login Page
 def login_page():
-    global login_type
     global login_code
     global login_check
     repeat = True
@@ -73,7 +80,12 @@ def login_page():
         # If the user chooses new customer, they would be directed to the signup page
         elif option == 2:
             signup()
+
 #MAIN PROGRAM
+# def main():
+#     login_type = login_page()
+
+# main()
 login_page()
 items_drinks=[{"name":"Coca Cola", "Quantity": 100,"Price":10},{"name":"Sprite", "Quantity": 100,"Price":9},{"name":"Beer", "Quantity": 100,"Price":12},{"name":"Wine", "Quantity": 100,"Price":40},{"name":"Water", "Quantity": 100,"Price":3},]
 items_snack=[{"name":"Oreo", "Quantity": 100,"Price":10},{"name":"Chips", "Quantity": 100,"Price":12},{"name":"Candy", "Quantity": 100,"Price":5},{"name":"Popcorn", "Quantity": 100,"Price":18},{"name":"Lolipop", "Quantity": 100,"Price":12},]
