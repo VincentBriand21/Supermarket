@@ -4,6 +4,7 @@
 # Date and time : 11 January 2021
 # -----------------------------------------------------------------------------
 import random
+import csv
 from tkinter import*
 from tkinter import messagebox
 
@@ -45,79 +46,90 @@ cust_id = {}
 login_check = 0
 
 
-# This Section of my code is for the signup function
+# ---------------------------------- Signup ---------------------------------------------
 def signup ():
-
     name = input("Enter your full name : ")
-    creditCard = input("Enter your credit card")
+    creditCard = input("Enter your credit card: ")
     while len(creditCard) != 11:
         creditCard = input("Enter a CORRECT 11 digit credit card information: ")
     
-    email = input("Enter your email address")
+    email = input("Enter your email address: ")
     loginCode = random.randint(100000,999999) #! Future Update : Make sure login code is unique
+    print(f"Your Login Code: {loginCode}")
     previousTransactionAmount = 0
-    a = Customer(name,creditCard,email,loginCode,previousTransactionAmount)
+    a = Customer(name,creditCard,email,loginCode,previousTransactionAmount) # Make a new customer object, then write it to the database
 
     with open("customers.csv", 'a') as file:
         file.write(f"{name},{creditCard},{email},{loginCode},{previousTransactionAmount}\n")
 
 
+# --------------------------------- Login Functions --------------------------------
+def checkLoginCode(csv_file_path, login_code):
+    with open(csv_file_path, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            if row['LoginCode'] == login_code:
+                return True
+    return False
 
-    # global login_code
-    # global cust_id
-    # global customer_info
-    # # I set up a customer ID variable that would contain the new customer's
-    # # Name, Credit Card Number, Email, Login code and previous transaction amount that would be utilized later on
-    # cust_id = {}
-    # cust_id["name"] = input("Enter your full name : ")
-    # cust_id["credit card"] = input("Enter an 11 digit credit card information: ")
-    # while len(cust_id["credit card"]) != 11:
-    #     cust_id["credit card"] = input("Enter a CORRECT 11 digit credit card information: ")
-    # cust_id["email"] = input("Enter your email address: ")
-    # cust_id["login code"] = random.randint(1000,9999)
-    # cust_id["Previous Transaction Amounts"] = 0
-    # # I appended the login code generated into the list of login codes
-    # login_codes.append(cust_id["login code"])
-    # # I appended the entire Customer ID dictionary into a customer info array which stores all customer's information
-    # customer_info.append(cust_id)
-    # print("Your login code is", cust_id["login code"])
-    # return cust_id
+def login():
+    repeat = True
+    while repeat  != False:
+        loginCode = input("\nEnter Your Login Code: ")
 
-# This Section Of Code is a Function for the Login Page
+        # * Manager Login
+        if loginCode == "M123" : 
+            return 2
+        
+        # * User Login
+        if checkLoginCode("customers.csv", loginCode) == True :
+            return 1
+        else:
+            print("\nPlease enter your login code correctly or sign up if you don't have one.")
+            print("1. Re-enter\n2. Sign up")
+            option = int(input("What do you want to do: "))
+            if option == 1:
+                pass
+            else:
+                signup()
 
 def login_page():
-    repeat = True
-    # I put this code on a loop so that if the User inputted an incorrect login code,
-    # the function wont stop running
-    while repeat == True:
-        print("\n|---------Ayman's Supermarket----------|")
-        option = int(input("1. Login\n2. New Customer\n3. Exit\nEnter : "))
-        if option == 1:
-            login_check = input("Enter Your Login Code")
-            
-            for i in range(len(login_codes)):
-                # There are 2 different user type , Manager and Customer
-                # This chunk of code is for the customer login if they
-                # Correctly inputted the login code
-                if str(login_check) == str(login_codes[i]):
-                    repeat = False
-                    login_type = 1
-                    login_code = login_check
-                # This code is to enter the Manager's login
-                elif login_check == "M123":
-                    repeat = False
-                    login_type = 2
-        # If the user chooses new customer, they would be directed to the signup page
-        elif option == 2:
+    print("\n|---------Ayman's Supermarket----------|")
+    option = int(input("1. Login\n2. New Customer\n3. Exit\nEnter : "))
+    return option
+
+# --------------------------------- User Program ----------------------------------------
+def userProgram():
+    pass
+
+# --------------------------------- Manager Program --------------------------------------
+def managerProgram():
+    pass
+
+# -------------------------------- MAIN PROGRAM -------------------------------------------
+def main():
+    exit = False
+    while exit != True:
+        option = login_page()
+
+        if option == 1: # Login
+            loginType = login()
+            if loginType == 1:
+                userProgram()
+            elif loginType == 2:
+                managerProgram()
+
+        elif option == 2: # Signup
             signup()
-        elif option == 3:
-            break
 
-#MAIN PROGRAM
-# def main():
-#     login_type = login_page()
+        elif option == 3: # Exit
+            print("Thank You For Using The Program")
+            exit = False
+    return
 
-# main()
+main()
+
+# Old main program
 login_page()
 items_drinks=[{"name":"Coca Cola", "Quantity": 100,"Price":10},{"name":"Sprite", "Quantity": 100,"Price":9},{"name":"Beer", "Quantity": 100,"Price":12},{"name":"Wine", "Quantity": 100,"Price":40},{"name":"Water", "Quantity": 100,"Price":3},]
 items_snack=[{"name":"Oreo", "Quantity": 100,"Price":10},{"name":"Chips", "Quantity": 100,"Price":12},{"name":"Candy", "Quantity": 100,"Price":5},{"name":"Popcorn", "Quantity": 100,"Price":18},{"name":"Lolipop", "Quantity": 100,"Price":12},]
