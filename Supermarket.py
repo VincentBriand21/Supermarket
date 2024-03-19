@@ -13,8 +13,8 @@ from tkinter import messagebox
 # use OOP
 # Export and import using CSV format
 # Make each customer as an object of which there is a shopping cart as a dictionary format
-# Create a main program
-# Cleanup the main program
+# * Create a main program
+# * Cleanup the main program
 
 # This section of code is my Initialization for the variables
 # I could make the initialization in one line for line efficiency but
