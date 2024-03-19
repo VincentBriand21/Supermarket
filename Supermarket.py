@@ -18,6 +18,19 @@ from tkinter import messagebox
 # This section of code is my Initialization for the variables
 # I could make the initialization in one line for line efficiency but
 # It's easier to see if it's laid out line by line
+
+# * Class Variables
+
+class Customer(object):
+    def __init__(self, name, creditCard, email, loginCode, transactionAmount,totalSpent=0): 
+        self.name = name 
+        self.creditCard = creditCard 
+        self.email = email
+        self.loginCode = loginCode
+        self.transactionAmount = transactionAmount
+        self.totalSpent = totalSpent
+
+
 items = []
 total = 0
 total_revenue = 0
@@ -31,40 +44,57 @@ customer_info = []
 cust_id = {}
 login_check = 0
 
+
 # This Section of my code is for the signup function
 def signup ():
-    global login_code
-    global cust_id
-    global customer_info
-    # I set up a customer ID variable that would contain the new customer's
-    # Name, Credit Card Number, Email, Login code and previous transaction amount that would be utilized later on
-    cust_id = {}
-    cust_id["name"] = input("Enter your full name : ")
-    cust_id["credit card"] = input("Enter an 11 digit credit card information: ")
-    while len(cust_id["credit card"]) != 11:
-        cust_id["credit card"] = input("Enter a CORRECT 11 digit credit card information: ")
-    cust_id["email"] = input("Enter your email address: ")
-    cust_id["login code"] = random.randint(1000,9999)
-    cust_id["Previous Transaction Amounts"] = 0
-    # I appended the login code generated into the list of login codes
-    login_codes.append(cust_id["login code"])
-    # I appended the entire Customer ID dictionary into a customer info array which stores all customer's information
-    customer_info.append(cust_id)
-    print("Your login code is", cust_id["login code"])
-    return cust_id
+
+    name = input("Enter your full name : ")
+    creditCard = input("Enter your credit card")
+    while len(creditCard) != 11:
+        creditCard = input("Enter a CORRECT 11 digit credit card information: ")
+    
+    email = input("Enter your email address")
+    loginCode = random.randint(100000,999999) #! Future Update : Make sure login code is unique
+    previousTransactionAmount = 0
+    a = Customer(name,creditCard,email,loginCode,previousTransactionAmount)
+
+    with open("customers.csv", 'a') as file:
+        file.write(f"{name},{creditCard},{email},{loginCode},{previousTransactionAmount}\n")
+
+
+
+    # global login_code
+    # global cust_id
+    # global customer_info
+    # # I set up a customer ID variable that would contain the new customer's
+    # # Name, Credit Card Number, Email, Login code and previous transaction amount that would be utilized later on
+    # cust_id = {}
+    # cust_id["name"] = input("Enter your full name : ")
+    # cust_id["credit card"] = input("Enter an 11 digit credit card information: ")
+    # while len(cust_id["credit card"]) != 11:
+    #     cust_id["credit card"] = input("Enter a CORRECT 11 digit credit card information: ")
+    # cust_id["email"] = input("Enter your email address: ")
+    # cust_id["login code"] = random.randint(1000,9999)
+    # cust_id["Previous Transaction Amounts"] = 0
+    # # I appended the login code generated into the list of login codes
+    # login_codes.append(cust_id["login code"])
+    # # I appended the entire Customer ID dictionary into a customer info array which stores all customer's information
+    # customer_info.append(cust_id)
+    # print("Your login code is", cust_id["login code"])
+    # return cust_id
 
 # This Section Of Code is a Function for the Login Page
+
 def login_page():
-    global login_code
-    global login_check
     repeat = True
     # I put this code on a loop so that if the User inputted an incorrect login code,
     # the function wont stop running
     while repeat == True:
         print("\n|---------Ayman's Supermarket----------|")
-        option = int(input("1. Login\n2. New Customer\nEnter : "))
+        option = int(input("1. Login\n2. New Customer\n3. Exit\nEnter : "))
         if option == 1:
-            login_check = input("Enter the Login Code Previously Registered: ")
+            login_check = input("Enter Your Login Code")
+            
             for i in range(len(login_codes)):
                 # There are 2 different user type , Manager and Customer
                 # This chunk of code is for the customer login if they
@@ -80,6 +110,8 @@ def login_page():
         # If the user chooses new customer, they would be directed to the signup page
         elif option == 2:
             signup()
+        elif option == 3:
+            break
 
 #MAIN PROGRAM
 # def main():
