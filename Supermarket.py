@@ -10,6 +10,7 @@ from tkinter import messagebox
 
 #TODO:
 # use tabulate
+
 # use OOP
 # Export and import using CSV format
 # Make each customer as an object of which there is a shopping cart as a dictionary format
@@ -22,14 +23,22 @@ from tkinter import messagebox
 
 # * Class Variables
 
+class items(object):
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
 class Customer(object):
-    def __init__(self, name, creditCard, email, loginCode, transactionAmount,totalSpent=0): 
+    def __init__(self, name, creditCard, email, loginCode, transactionAmount,totalSpent=0, cart=[]): 
         self.name = name 
         self.creditCard = creditCard 
         self.email = email
         self.loginCode = loginCode
         self.transactionAmount = transactionAmount
         self.totalSpent = totalSpent
+
+        self.cart = cart
     
     def buy(self):
         pass
