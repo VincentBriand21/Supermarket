@@ -30,8 +30,22 @@ class Customer(object):
         self.loginCode = loginCode
         self.transactionAmount = transactionAmount
         self.totalSpent = totalSpent
+    
+    def buy(self):
+        pass
+    def pay(self):
+        pass
+    def checkCart(self):
+        pass
+
+class Items(object):
+    def __init__(self, name, quantity, price):
+        self.name = name
+        self.quantity = quantity
+        self.price = price
 
 
+# ! Old Variables
 items = []
 total = 0
 total_revenue = 0
@@ -45,6 +59,12 @@ customer_info = []
 cust_id = {}
 login_check = 0
 
+# ------------------------- Printing Functions --------------------------------
+def printHeader():
+    print("|----------Welcome to Ayman's Supermarket----------|")
+    print('1. Shopping Cart\n2. Purchase items\n3. Exit')
+    choice = int(input('Enter the number of your choice : '))
+    return choice
 
 # ---------------------------------- Signup ---------------------------------------------
 def signup ():
@@ -100,7 +120,18 @@ def login_page():
 
 # --------------------------------- User Program ----------------------------------------
 def userProgram():
-    pass
+    choice = printHeader()
+    if choice == 1:
+        # Show Shopping Cart: name, quantity, price per item and subtotal (table format)
+        # Use tabulate
+        pass
+    elif choice == 2:
+        # Purchase items
+        pass
+    elif choice == 3:
+        # Exit / Pay
+        pass
+
 
 # --------------------------------- Manager Program --------------------------------------
 def managerProgram():
@@ -127,7 +158,8 @@ def main():
             exit = False
     return
 
-main()
+if __name__ == "__main__":
+    main()
 
 # Old main program
 login_page()
