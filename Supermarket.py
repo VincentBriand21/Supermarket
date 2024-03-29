@@ -7,6 +7,7 @@ import random
 import csv
 from tkinter import*
 from tkinter import messagebox
+from tabulate import tabulate
 
 #TODO:
 # use tabulate
